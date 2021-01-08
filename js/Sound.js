@@ -19,7 +19,7 @@ export default class Sound extends Operator {
         this.duration2 = 0;
     }
 
-    action(repliques) {
+    async action(repliques) {
         if (settings.debug) console.log(`${this.name} plays: ${this.source}`);
         // File destination will be created or overwritten by default.
         const source = settings.soundsFolder + this.source;
@@ -27,22 +27,35 @@ export default class Sound extends Operator {
         audioFiles.push([ tmpFile, mp3File ]);
         status[mp3File] = false;
        
-        Tools.waitThenDo(this.lengthSet, Tools.doCopy, {
-            source: source, 
-            destination: mp3File, 
-            name: 'copy',
-            cb: (err) => {
-                if (err) throw err;
-                status[mp3File] = true; 
-            },
-        })
+        await this.durationPromise;
+        this.copyPromise = fs.copyFile(source, mp3File, (err) => {
+            if (err) throw err; 
+            status[mp3File] = true; 
+        }) 
+        // Tools.waitThenDo(this.lengthSet, Tools.doCopy, {
+        //     source: source, 
+        //     destination: mp3File, 
+        //     name: 'copy',
+        //     cb: (err) => {
+        //         if (err) throw err;
+        //         status[mp3File] = true; 
+        //     },
+        // })
         // Tools.mp3tomp3(source, mp3File, () => status[mp3File] = true)
     }
 
-    setLength () {
+    xsetLength () {
         this.lengthSet = [];
         this.lengthSet[this.name] = false;
         getAudioDurationInSeconds(settings.soundsFolder+this.source).then(duration => {   
+            this.length = duration;
+            this.lengthSet[this.name] = true;
+        })
+    }
+    async setLength () {
+        this.lengthSet = [];
+        this.lengthSet[this.name] = false;
+        this.durationPromise = getAudioDurationInSeconds(settings.soundsFolder+this.source).then(duration => {   
             this.length = duration;
             this.lengthSet[this.name] = true;
         })

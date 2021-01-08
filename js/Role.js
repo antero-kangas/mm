@@ -25,6 +25,30 @@ export default class Role extends Operator {
         }
         // TODO: erota gtts:n käyttö muualle
 
+
+        // loppuun " " missä erik.merkki + " "...
+        const specialChars = /[\.!?;:]/;
+        console.log("repliques=",repliques)
+        let joined = repliques.join(' ');
+        console.log("joined   =",joined)
+        let joinedsplitted = joined.split('');
+        console.log("joinedsplitted=",joinedsplitted)
+        let specs = ".!?;:".split('')
+        console.log("specs         =", specs)
+        let specials = joinedsplitted.filter(char => char in specs)
+        console.log("specials =", specials)
+        let splitted = joined.split(specialChars)
+        console.log("splitted =",splitted)
+        let trimmed = splitted.map(str => str.trim())
+        console.log("trimmed  =",trimmed)
+        let filtered = trimmed.filter(str => str !== '')
+        console.log("filtered =",filtered);
+
+        let specials2 = []
+        for (let i=0; i<joined.length; i++) {
+            if (joined.charAt[i] in specs) specials2.push(charAt[i])
+        }
+        console.log("spceials2=",specials2)
         const gtts = new gTTS(repliques.join(' '), this.lang);
         const [ tmpFile, mp3File ] = Tools.nextFilenames(this.name);
        
