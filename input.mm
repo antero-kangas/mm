@@ -6,30 +6,27 @@
   (title "Suuri esimerkki")
   (defaultlang fi)
   (debug true)
-  (show true)
+  (show false)
 )
 (Paragraph title (align center) (case upper))
 
 
 (title                     AKUN JA HANNUN VAPAAPÄIVÄ)
-(title                            20.12.2020 (say kahdeskymmenes kahdettatoista vuonna 2020))
-(*)
+(title                            20.12.2020 
+  (say kahdeskymmenes .. kahdettatoista vuonna 2020))
+  
 TODO:
-- values tulostuu tekstinä
-- say-parametrin arvon puhuu narrator
-vai kaikissa paragrapheissa tämä mahdollisuus
-- kuinka mahdollistetaan myös Role-rooleille?
+- kuinka mahdollistetaann "say" myös Role-rooleille?
 - alku- ja loppulainausmerkkejä ei puhuta
-- tavutusvihje on puheessa "-"
 - lopputuloksen tiedoston nimessä ei loppulainausmerkkejä eikä välilyöntejä
-(*)                            
+                          
 
 (synopsis 
-  Pienimuotoinen näytelmä. Käsikirjoitettu mm-kielen testaamista varten.
+  Pieni--muotoinen näytelmä. Käsi--kirjoitettu mm-kielen testaamista varten.
 
   Aku ja Hannu ovat kävelyllä. Iines on kutsunut heidät luokseen, mutta
   kumpikaan ei tiedä toisen olevan tulossa. He kohtaavatkin vähän ennen Iineksen
-  taloa, ja tilanne on vähällä mennä riidaksi, onneksi Iines ehtii hätiin.
+  taloa, ja til--anne on vähällä mennä riidaksi, onneksi Iines ehtii hätiin.
   Hänellä on kuitenkin Akulle ja Hannulle yllätys, jota kumpikaan ei ollut
   osannut odottaa.
 )
@@ -64,12 +61,13 @@ Ensin tarinan henkilöt esittäytyvät.
                   (HANNU)
                   (IINES)
 
-Nyt se alkaa, sa-noi "Ryan O'Neal".
+Nyt se alkaa, sa--noi "Ryan O'Neal".
 
 
-ENSIMMÄINEN KOHTAUS  
+ENSIMMÄINEN KOHTAUS
+ 
 
-Aku ja Hannu koh-taa-vat.
+Aku ja Hannu koh--taa--vat.
 He ovat molemmat epäluuloisia toisen aikeista.
 
                   (AKU 
@@ -106,7 +104,7 @@ Hänellä on pojille vähän puuhaa.
 
                   (IINES
               Hei pojat.
-              Kiva, että te molemmat pääsit-te 
+              Kiva, että te molemmat pääsit--te 
               näin nopeasti.
               Tänään on siivouspäivä.)
 

@@ -17,6 +17,9 @@ export default class Role extends Operator {
     }
 
     action(repliques) {
+        /**
+         * puhutaan repliikki
+         */
         if (!repliques || repliques.length==0) {
             repliques = [this.alias];
         }
@@ -27,14 +30,13 @@ export default class Role extends Operator {
 
 
         // loppuun " " missä erik.merkki + " "...
-        const specialChars = /[\.!?;:,]/;
-        const specialMatch = /[\.!?;:,] /g;
         const joined = repliques.join(' ') + ' ';
-        const match = joined.match(specialMatch) || [];
-        const splitted = joined.split(specialChars)
+        const match = joined.match(CONST.SPECIALMATCH) || [];
+        const splitted = joined.split(CONST.SPECIALMATCH);
         const trimmed = splitted.map(str => str.trim())
         const filtered = trimmed.filter(str => str !== '')
         const speaks = filtered.map((str, i) => {
+            str = str.replace(CONST.HYPHENHINT, CONST.HYPHEN);
             if (match[i] === undefined) {
                 return str
             }
@@ -48,18 +50,29 @@ export default class Role extends Operator {
         const promises = [];
         const self = this;
         speaks.forEach(async function (speak) {
-            console.log("gtts speak=", speak)
-            let [ tmpFile, mp3File ] = Tools.nextFilenames(self.name);audioFiles.push([ tmpFile, mp3File ]);
-            status[mp3File] = false;
-            filters[mp3File] = filter;
-            const gtts = new gTTS(speak, self.lang);
-            gtts.save(tmpFile, function (err, result) {
-                if (err) { 
-                    throw new Error(err) 
+            let words = speak.split(' ');
+            let i = 0
+            while (i < words.length) {
+                let sentence = words[i++];
+                while (i < words.length 
+                       && sentence.length + words[i].length + 1 
+                       <= CONST.GTTSMAXIMUM) {
+                    sentence += ' ' + words[i++];
                 }
-                status[mp3File] = true;
-                Tools.doFiltering(status, tmpFile, mp3File);
-            })
+                let [ tmpFile, mp3File ] = Tools.nextFilenames(self.name);
+                audioFiles.push([ tmpFile, mp3File ]);
+                status[mp3File] = false; // korvaa promisella
+                filters[mp3File] = filter;
+                const gtts = new gTTS(sentence, self.lang);
+                gtts.save(tmpFile, function (err, result) {
+                    if (err) {  
+                        console.log("gtts save failed:", tmpFile)
+                        throw new Error(err) 
+                    }
+                    status[mp3File] = true;
+                    Tools.doFiltering(status, tmpFile, mp3File);
+                })
+            }
         });
     }
 }

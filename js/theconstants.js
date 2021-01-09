@@ -19,6 +19,10 @@ const CONST = {
     DEFAULTGAIN: 1,
     DEFAULTPITCH: 1,
     DEFAULTRATE: 0.99,
+    HYPHEN: "-",
+    HYPHENHINT: "--",
+    SPECIALMATCH: /[\.!?;:,] /g,
+    GTTSMAXIMUM: 100,
 };
 
 export default CONST;

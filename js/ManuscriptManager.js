@@ -55,7 +55,9 @@ export default class ManuscriptManager extends MmListener {
 		
 		}
 
-		manuscript.forEach(call => call.operator.action(call.callValues));
+		manuscript.forEach(call => {
+			call.operator.action(call.callValues.say || call.callValues)
+		});
 		
         // if (settings.show) {
 		// 	console.log("AudioFiles");
@@ -368,6 +370,7 @@ export default class ManuscriptManager extends MmListener {
 
 	// Enter a parse tree produced by MmParser#callParameterName.
 	enterCallParameterName(ctx) {
+		// console.log("callParameterName=",ctx.getText());
 		this.callParameterName = ctx.getText();
 	}
 
@@ -383,6 +386,7 @@ export default class ManuscriptManager extends MmListener {
 
 	// Enter a parse tree produced by MmParser#parameterMember.
 	enterParameterMember(ctx) {
+		// console.log("callParameterMember=",ctx.getText());
 		this.parameterMembers.push(ctx.getText());
 	}
 
