@@ -34,15 +34,12 @@ export default class Role extends Operator {
         const splitted = joined.split(specialChars)
         const trimmed = splitted.map(str => str.trim())
         const filtered = trimmed.filter(str => str !== '')
-        console.log('m:',match.length, ' f: ',filtered.length)
         const speaks = filtered.map((str, i) => {
-            console.log("str=/",str,'/', str.length)
             if (match[i] === undefined) {
                 return str
             }
             return str + match[i].charAt(0); 
         })
-        console.log (speaks)
         const filter = Tools.mp3Filter({
             gain: this.gain,
             pitch: this.pitch,
@@ -62,29 +59,7 @@ export default class Role extends Operator {
                 }
                 status[mp3File] = true;
                 Tools.doFiltering(status, tmpFile, mp3File);
-                //console.log("filtered speak=", speak)    
             })
         });
-
-        // const gtts = new gTTS(repliques.join(' '), this.lang);
-        // const [ tmpFile, mp3File ] = Tools.nextFilenames(this.name);
-       
-        // audioFiles.push([ tmpFile, mp3File ]);
-        // status[mp3File] = false;
-
-        // filters[mp3File] = Tools.mp3Filter({
-        //     gain: this.gain,
-        //     pitch: this.pitch,
-        //     rate: this.rate,
-        // })
-        // let f = filters[mp3File]
-        // gtts.save(tmpFile, function (err, result) {
-        //     if (err) { 
-        //         throw new Error(err) 
-        //     }    
-        //     status[mp3File] = true;
-        //     Tools.doFiltering(status, tmpFile, mp3File)
-        // });
     }
-
 }
