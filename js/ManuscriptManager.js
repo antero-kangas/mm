@@ -6,9 +6,10 @@ import Paragraph from './Paragraph.js';
 import settings from './Settings.js';
 import Call from './Call.js';
 import Tools from './Tools.js';
+import Book from './Book.js';
+import CONST from './CONST.js'
 import MmListener from './../grammar/MmParserListener.js';
-import { operators, manuscript, audioFiles, status, filters } from './thesscript.js'
-import CONST from './theconstants.js'
+import { operators, manuscript, audioFiles, status, filters } from './SCRIPT.js'
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
@@ -29,27 +30,27 @@ export default class ManuscriptManager extends MmListener {
 			leftmargin:10, rightmargin:10});
 		let title = new Paragraph('title', {align: CONST.CENTER, case: CONST.UPPER});
 		let synopsis = new Paragraph('synopsis', {align: CONST.LEFT, case: CONST.UPPER});
-		console.log(parenthesis.constructor.name);
+		Tools.show(parenthesis.constructor.name);
     }
 	// Enter a parse tree produced by MmParser#mm.
 	enterMm(ctx) {
-        if (settings.show) {
-			console.log("Tästä se alkaa...");
-		}
+		Tools.show("Tästä se alkaa...");
 	}
 
 	// Exit a parse tree produced by MmParser#mm.
 	 exitMm(ctx) {
+		const book = new Book(manuscript);
+		console.log(book.text)
         if (settings.show) {
 				Tools.waitThenDo(status, () => {
-					console.log("Tähän se päättyi.");
-					console.log(settings);
-					// console.log("Operators");
-					// console.log(operators);
-					console.log("Manuscript");
-					console.log(manuscript);
-					console.log(audioFiles.map(element => {return element[1]}))
-					console.log("-------------");
+					Tools.show("Tähän se päättyi.");
+					Tools.show(settings);
+					// Tools.show("Operators");
+					// Tools.show(operators);
+					Tools.show("Manuscript");
+					Tools.show(manuscript);
+					Tools.show(audioFiles.map(element => {return element[1]}))
+					Tools.show("-------------");
 					Tools.setArray(status, true);
 				 }, {});
 		
@@ -281,7 +282,7 @@ export default class ManuscriptManager extends MmListener {
 		let memberName = ctx.getText();
 		let groupMember = operators[memberName];
 		if (!groupMember) {
-			console.log(`In the definition of Group "${this.operator.name}": undefined groupmember "${memberName}"`);
+			Tools.show(`In the definition of Group "${this.operator.name}": undefined groupmember "${memberName}"`);
 		} else {
 			this.groupMembers.push(groupMember)
 		}

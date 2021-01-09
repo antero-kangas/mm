@@ -1,7 +1,7 @@
 import Operator from './Operator.js';
 import settings from './Settings.js'
-import CONST from './theconstants.js';
-import { operators, manuscript, audioFiles, status } from './thesscript.js'
+import CONST from './CONST.js';
+import { operators, manuscript, audioFiles, status } from './SCRIPT.js'
 
 export default class Paragraph extends Operator {
     constructor(name, more={}) {

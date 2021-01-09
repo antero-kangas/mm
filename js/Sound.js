@@ -1,7 +1,7 @@
 import Operator from './Operator.js';
 import settings from './Settings.js';
 import Tools from './Tools.js';
-import { operators, manuscript, audioFiles, status, filters } from './thesscript.js'
+import { operators, manuscript, audioFiles, status, filters } from './SCRIPT.js'
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 const fs = require('fs');
@@ -20,7 +20,7 @@ export default class Sound extends Operator {
     }
 
     async action(repliques) {
-        if (settings.debug) console.log(`${this.name} plays: ${this.source}`);
+        Tools.debug(`${this.name} plays: ${this.source}`);
         // File destination will be created or overwritten by default.
         const source = settings.soundsFolder + this.source;
         const [ tmpFile, mp3File ] = Tools.nextFilenames(this.name);

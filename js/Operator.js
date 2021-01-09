@@ -1,5 +1,5 @@
 import settings from "./Settings.js";
-import { operators, manuscript, audioFiles, status } from './thesscript.js'
+import { operators, manuscript, audioFiles, status } from './SCRIPT.js'
 
 export default class Operator {
     constructor(name) {

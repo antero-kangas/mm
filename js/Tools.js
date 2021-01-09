@@ -1,6 +1,6 @@
-import CONST from './theconstants.js';
+import CONST from './CONST.js';
 import settings from './Settings.js';
-import { operators, manuscript, audioFiles, status, filters } from './thesscript.js'
+import { operators, manuscript, audioFiles, status, filters } from './SCRIPT.js'
 
 import { createRequire } from 'module';
 import { SSL_OP_EPHEMERAL_RSA } from 'constants';
@@ -11,7 +11,7 @@ const play = require('play');
 const ffmpeg = require('fluent-ffmpeg');
 const proc = new ffmpeg();
 
-export default class Tools{
+export default class Tools {
     static fileCounter = 0;
 
     static pad (num, places=1, padChar='0') {
@@ -155,6 +155,22 @@ export default class Tools{
             asetrate: CONST.DEFAULTAUDIOFREQUENCY 
                       * (params.pitch || CONST.DEFAULTPITCH),
             atempo: params.rate || CONST.DEFAULTRATE,
+        }
+    }
+
+    static debug(...arr) {
+        if (settings.debug) {
+            let txt = '';
+            arr.forEach(str => txt += str);
+            console.log(txt)
+        }
+    }
+
+    static show(...arr) {
+        if (settings.show) {
+            let txt = '';
+            arr.forEach(str => txt += str);
+            console.log(txt)
         }
     }
 

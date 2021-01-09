@@ -1,15 +1,13 @@
 import Operator from './Operator.js'
 import settings from "./Settings.js";
+import Tools from './Tools.js';
 
-export default class Wait extends Operator{
+export default class Wait extends Operator {
     constructor(name){
         super(name);
     }
     
     action(repliques) {
-        if (settings.debug) {
-            console.log(`${this.name} waits: ${this.delay} ms`);
-        }
+        Tools.debug(`${this.name} waits: ${this.delay} ms`);
     }
-
 }

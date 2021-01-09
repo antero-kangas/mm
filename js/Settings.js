@@ -1,4 +1,4 @@
-import CONST from './theconstants.js';
+import CONST from './CONST.js';
 
 class Settings {
     constructor(name){

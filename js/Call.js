@@ -1,4 +1,4 @@
-import { operators } from './thesscript.js';
+import { operators } from './SCRIPT.js';
 
 export default class Call {
     constructor(name) {

@@ -1,8 +1,8 @@
 import Operator from './Operator.js'
 import settings from './Settings.js';
 import Tools from './Tools.js';
-import CONST from './theconstants.js';
-import { operators, manuscript, audioFiles, status, filters } from './thesscript.js'
+import CONST from './CONST.js';
+import { operators, manuscript, audioFiles, status, filters } from './SCRIPT.js'
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
@@ -23,9 +23,8 @@ export default class Role extends Operator {
         if (!repliques || repliques.length==0) {
             repliques = [this.alias];
         }
-        if (settings.debug) {
-            console.log(`${this.name} says: ${repliques.join(' ')}`);
-        }
+        Tools.debug(`${this.name} says: ${repliques.join(' ')}`);
+        
         // TODO: erota gtts:n käyttö muualle
 
 

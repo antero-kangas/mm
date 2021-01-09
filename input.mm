@@ -6,19 +6,21 @@
   (title "Suuri esimerkki")
   (defaultlang fi)
   (debug true)
-  (show false)
+  (show true)
 )
 (Paragraph title (align center) (case upper))
 
 
 (title                     AKUN JA HANNUN VAPAAPÄIVÄ)
 (title                            20.12.2020 
-  (say kahdeskymmenes .. kahdettatoista vuonna 2020))
+  (say kahdeskymmenes kahdettatoista vuonna 2020))
   
 TODO:
 - kuinka mahdollistetaann "say" myös Role-rooleille?
 - alku- ja loppulainausmerkkejä ei puhuta
 - lopputuloksen tiedoston nimessä ei loppulainausmerkkejä eikä välilyöntejä
+- rivinvaihdot jätetään ja ne ovat tarvittaessa katkoja 
+- vaan tuleeko niistä Narratoreja? ==> pelkät whitespacet jätetään pois -> hmmm...ß 
                           
 
 (synopsis 
