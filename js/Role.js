@@ -27,46 +27,64 @@ export default class Role extends Operator {
 
 
         // loppuun " " missä erik.merkki + " "...
-        const specialChars = /[\.!?;:]/;
-        console.log("repliques=",repliques)
-        let joined = repliques.join(' ');
-        console.log("joined   =",joined)
-        let joinedsplitted = joined.split('');
-        console.log("joinedsplitted=",joinedsplitted)
-        let specs = ".!?;:".split('')
-        console.log("specs         =", specs)
-        let specials = joinedsplitted.filter(char => char in specs)
-        console.log("specials =", specials)
-        let splitted = joined.split(specialChars)
-        console.log("splitted =",splitted)
-        let trimmed = splitted.map(str => str.trim())
-        console.log("trimmed  =",trimmed)
-        let filtered = trimmed.filter(str => str !== '')
-        console.log("filtered =",filtered);
-
-        let specials2 = []
-        for (let i=0; i<joined.length; i++) {
-            if (joined.charAt[i] in specs) specials2.push(charAt[i])
-        }
-        console.log("spceials2=",specials2)
-        const gtts = new gTTS(repliques.join(' '), this.lang);
-        const [ tmpFile, mp3File ] = Tools.nextFilenames(this.name);
-       
-        audioFiles.push([ tmpFile, mp3File ]);
-        status[mp3File] = false;
-        filters[mp3File] = Tools.mp3Filter({
+        const specialChars = /[\.!?;:,]/;
+        const specialMatch = /[\.!?;:,] /g;
+        const joined = repliques.join(' ') + ' ';
+        const match = joined.match(specialMatch) || [];
+        const splitted = joined.split(specialChars)
+        const trimmed = splitted.map(str => str.trim())
+        const filtered = trimmed.filter(str => str !== '')
+        console.log('m:',match.length, ' f: ',filtered.length)
+        const speaks = filtered.map((str, i) => {
+            console.log("str=/",str,'/', str.length)
+            if (match[i] === undefined) {
+                return str
+            }
+            return str + match[i].charAt(0); 
+        })
+        console.log (speaks)
+        const filter = Tools.mp3Filter({
             gain: this.gain,
             pitch: this.pitch,
             rate: this.rate,
-        })
-        let f = filters[mp3File]
-        gtts.save(tmpFile, function (err, result) {
-            if (err) { 
-                throw new Error(err) 
-            }    
-            status[mp3File] = true;
-            Tools.doFiltering(status, tmpFile, mp3File)
         });
+        const promises = [];
+        const self = this;
+        speaks.forEach(async function (speak) {
+            console.log("gtts speak=", speak)
+            let [ tmpFile, mp3File ] = Tools.nextFilenames(self.name);audioFiles.push([ tmpFile, mp3File ]);
+            status[mp3File] = false;
+            filters[mp3File] = filter;
+            const gtts = new gTTS(speak, self.lang);
+            gtts.save(tmpFile, function (err, result) {
+                if (err) { 
+                    throw new Error(err) 
+                }
+                status[mp3File] = true;
+                Tools.doFiltering(status, tmpFile, mp3File);
+                //console.log("filtered speak=", speak)    
+            })
+        });
+
+        // const gtts = new gTTS(repliques.join(' '), this.lang);
+        // const [ tmpFile, mp3File ] = Tools.nextFilenames(this.name);
+       
+        // audioFiles.push([ tmpFile, mp3File ]);
+        // status[mp3File] = false;
+
+        // filters[mp3File] = Tools.mp3Filter({
+        //     gain: this.gain,
+        //     pitch: this.pitch,
+        //     rate: this.rate,
+        // })
+        // let f = filters[mp3File]
+        // gtts.save(tmpFile, function (err, result) {
+        //     if (err) { 
+        //         throw new Error(err) 
+        //     }    
+        //     status[mp3File] = true;
+        //     Tools.doFiltering(status, tmpFile, mp3File)
+        // });
     }
 
 }

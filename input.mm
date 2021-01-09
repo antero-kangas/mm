@@ -11,9 +11,18 @@
 (Paragraph title (align center) (case upper))
 
 
-(title
-                       AKUN JA HANNUN VAPAAPÄIVÄ
-                            20. 12. 2020)
+(title                     AKUN JA HANNUN VAPAAPÄIVÄ)
+(title                            20.12.2020 (say kahdeskymmenes kahdettatoista vuonna 2020))
+(*)
+TODO:
+- values tulostuu tekstinä
+- say-parametrin arvon puhuu narrator
+vai kaikissa paragrapheissa tämä mahdollisuus
+- kuinka mahdollistetaan myös Role-rooleille?
+- alku- ja loppulainausmerkkejä ei puhuta
+- tavutusvihje on puheessa "-"
+- lopputuloksen tiedoston nimessä ei loppulainausmerkkejä eikä välilyöntejä
+(*)                            
 
 (synopsis 
   Pienimuotoinen näytelmä. Käsikirjoitettu mm-kielen testaamista varten.
